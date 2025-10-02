@@ -77,7 +77,7 @@ my-project/
 │ └── favicon.ico
 │
 ├── src/
-│ ├── components/ # Reusable UI components
+│ ├── components/ # Reusable v UI components
 │ │ ├── Button/
 │ │ │ ├── Button.tsx
 │ │ │ └── Button.module.css (or .scss / styled)  

@@ -2,9 +2,14 @@ import Button from "../components/common/Button";
 import Search from "../components/common/Search";
 import Header from "../components/layouts/Header";
 import type { RootState } from "../store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsOpen } from "../components/features/Modal/toggleModalSlice";
+
+import MultiStepFormModal from "../components/common/Modal/MultiStepFormModal";
 
 const Claims = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state: RootState) => state.modal.isOpen);
   const { results } = useSelector((state: RootState) => state.search);
   return (
     <div className="w-full min-h-full">
@@ -17,9 +22,11 @@ const Claims = () => {
             hoverColor="hover:bg-green-600"
             color="text-white"
             title="New Claim"
+            onClick={() => dispatch(setIsOpen(true))}
           />
         </div>
       </div>
+      {isOpen && <MultiStepFormModal />}
       <div className="m-4 p-4 border shadow-2xl rounded-lg bg-transparent">
         {results.map((data) => (
           <div className="grid grid-cols-6 place-content-center place-items-center w-full p-2">
