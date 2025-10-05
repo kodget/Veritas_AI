@@ -1,32 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import "./App.css";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faUser,
-  faEnvelope,
-  faPlus,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import Settings from "./pages/Settings";
-import Reports from "./pages/Reports";
-import Claims from "./pages/Claims";
-import Layout from "./components/layouts/Layout";
+import React from "react";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import AppRouter from "./AppRouter";
+import "./index.css";
 
-// Add them globally
-library.add(faUser, faEnvelope, faPlus, faXmark);
-
-function App() {
+const App: React.FC = () => {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Claims />} />
-          <Route path="/about" element={<Reports />} />
-          <Route path="/contact" element={<Settings />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
   );
-}
+};
 
 export default App;
