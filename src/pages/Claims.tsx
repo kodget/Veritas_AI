@@ -40,7 +40,13 @@ const Claims = () => {
             <div className="flex flex-row gap-2">
               <span className="text-white">{data.riskScore}</span>
               <div
-                className={`w-[12%] bg-green-500 h-full rounded-xl ${data.riskBar} `}
+                className={`w-2 h-2 rounded-full ${
+                  data.riskScore > 80
+                    ? "bg-red-500"
+                    : data.riskScore > 50
+                    ? "bg-yellow-500"
+                    : "bg-green-500"
+                }`}
               ></div>
             </div>
           </div>
