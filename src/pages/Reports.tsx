@@ -1,5 +1,3 @@
-import Header from "../components/layouts/Header";
-
 const Reports = () => {
   return (
     <div>
