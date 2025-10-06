@@ -34,10 +34,14 @@ const Login: React.FC = () => {
       const response = await apiService.login({ email, password });
       
       if (response.access_token) {
+        // Extract name from email for better personalization
+        const emailName = email.split('@')[0];
+        const firstName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+        
         const user = { 
           id: 'user-' + Date.now(), 
           email, 
-          firstName: 'User', 
+          firstName, 
           role: 'Adjuster' as const 
         };
         

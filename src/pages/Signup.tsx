@@ -41,7 +41,7 @@ const Signup: React.FC = () => {
         const user = { 
           id: response.id, 
           email: response.email, 
-          firstName: response.full_name || name, 
+          firstName: response.full_name || name.split(' ')[0], 
           role: 'Adjuster' as const 
         };
         
