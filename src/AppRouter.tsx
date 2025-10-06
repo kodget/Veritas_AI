@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // Pages
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Claims from './pages/Claims';
@@ -22,6 +23,9 @@ const AppRouter: React.FC = () => {
   return (
     <Router>
       <Routes>
+        {/* Landing Page - No Layout */}
+        <Route path="/landing" element={<Landing />} />
+        
         {/* Auth Pages - No Layout */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

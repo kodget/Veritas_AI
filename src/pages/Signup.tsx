@@ -55,6 +55,17 @@ const Signup: React.FC = () => {
 
   return (
     <AuthLayout>
+      {/* Back to Landing Button */}
+      <div className="mb-4">
+        <button
+          onClick={() => navigate('/landing')}
+          className="flex items-center text-slate-600 hover:text-emerald-600 transition-colors duration-200"
+        >
+          <i className="fa-solid fa-arrow-left mr-2"></i>
+          Back to Landing
+        </button>
+      </div>
+      
       <h2 className="text-2xl font-bold text-gray-800 text-center mb-6 flex items-center justify-center">
         <IoPersonAdd className="h-6 w-6 mr-2 text-emerald-500" />
         New Agent Registration
