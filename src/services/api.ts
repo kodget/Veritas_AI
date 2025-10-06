@@ -2,7 +2,7 @@ const API_BASE_URL = 'https://veritas-ai-backend-db28.onrender.com/api/v1';
 
 export const apiService = {
   // Authentication endpoints
-  signup: async (userData: { email: string; password: string; firstName: string; lastName: string }) => {
+  signup: async (userData: { email: string; password: string; full_name: string }) => {
     const response = await fetch(`${API_BASE_URL}/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

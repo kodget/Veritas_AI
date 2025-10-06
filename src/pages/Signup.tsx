@@ -31,23 +31,27 @@ const Signup: React.FC = () => {
     dispatch(authRequest());
 
     try {
-      const [firstName, lastName] = name.split(' ');
       const response = await apiService.signup({ 
         email, 
         password, 
-        firstName: firstName || name, 
-        lastName: lastName || '' 
+        full_name: name
       });
       
-      if (response.access_token) {
+      if (response.id) {
         const user = { 
-          id: response.user?.id || 'user-new', 
-          email, 
-          firstName: firstName || name, 
+          id: response.id, 
+          email: response.email, 
+          firstName: response.full_name || name, 
           role: 'Adjuster' as const 
         };
         
-        dispatch(authSuccess({ user, token: response.access_token }));
+        // For signup, we need to login after successful registration
+        const loginResponse = await apiService.login({ email, password });
+        if (loginResponse.access_token) {
+          dispatch(authSuccess({ user, token: loginResponse.access_token }));
+        } else {
+          dispatch(authSuccess({ user, token: 'temp-token' }));
+        }
         navigate('/dashboard');
       } else {
         dispatch(authFailure(response.message || 'Registration failed. Please try again.'));
