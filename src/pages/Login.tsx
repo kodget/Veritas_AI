@@ -35,9 +35,9 @@ const Login: React.FC = () => {
       
       if (response.access_token) {
         const user = { 
-          id: response.user?.id || 'user-001', 
+          id: 'user-' + Date.now(), 
           email, 
-          firstName: response.user?.firstName || 'User', 
+          firstName: 'User', 
           role: 'Adjuster' as const 
         };
         
