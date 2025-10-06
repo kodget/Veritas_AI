@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../layouts/AuthLayout';
 import { useAppDispatch, useAppSelector } from '../redux/store'; 
 import { authRequest, authSuccess, authFailure } from '../features/auth/authSlice';
-import { IoPersonAdd } from 'react-icons/io5'; 
+import { IoPersonAdd } from 'react-icons/io5';
+import { apiService } from '../services/api'; 
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
@@ -19,7 +20,7 @@ const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name || !email || !password) {
@@ -29,28 +30,32 @@ const Signup: React.FC = () => {
 
     dispatch(authRequest());
 
-    // --- SIMULATED REGISTRATION API CALL ---
-    setTimeout(() => {
-      try {
-        if (!email.includes('@')) {
-          dispatch(authFailure('Please enter a valid email address.'));
-          return;
-        }
-        if (password.length < 6) {
-          dispatch(authFailure('Password must be at least 6 characters long.'));
-          return;
-        }
+    try {
+      const [firstName, lastName] = name.split(' ');
+      const response = await apiService.signup({ 
+        email, 
+        password, 
+        firstName: firstName || name, 
+        lastName: lastName || '' 
+      });
+      
+      if (response.access_token) {
+        const user = { 
+          id: response.user?.id || 'user-new', 
+          email, 
+          firstName: firstName || name, 
+          role: 'Adjuster' as const 
+        };
         
-        // Success: Log user in immediately after successful registration
-        const dummyUser = { id: 'user-new', email: email, firstName: name, role: 'Adjuster' as const };
-        const dummyToken = 'jwt-secure-token-new-user';
-        
-        dispatch(authSuccess({ user: dummyUser, token: dummyToken }));
-        navigate('/report');
-      } catch (error) {
-        dispatch(authFailure('An unexpected error occurred during registration.'));
+        dispatch(authSuccess({ user, token: response.access_token }));
+        navigate('/dashboard');
+      } else {
+        dispatch(authFailure(response.message || 'Registration failed. Please try again.'));
       }
-    }, 1500); 
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Network error. Please check your connection.';
+      dispatch(authFailure(errorMessage));
+    }
   };
 
   return (

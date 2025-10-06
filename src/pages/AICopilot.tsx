@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { apiService } from '../services/api';
 
 // TypeScript interfaces
 interface Message {
@@ -56,19 +57,12 @@ const AICopilot: React.FC<InvestigatorChatProps> = ({ claimId = 'CLM-2024-0001' 
 
     try {
       // Simulate API call - replace with actual endpoint
-      const response = await fetch(`/api/claims/${claimId}/investigate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: userMessage.text })
-      });
+      const token = localStorage.getItem('token') || '';
+      const response = await apiService.investigate(claimId, userMessage.text, token);
 
-      if (!response.ok) throw new Error('API request failed');
-      
-      const data = await response.json();
-      
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.response || 'Based on my analysis of the claim data, I found several key insights that warrant further investigation...',
+        text: response.response || 'Based on my analysis of the claim data, I found several key insights that warrant further investigation...',
         sender: 'ai',
         timestamp: new Date().toLocaleTimeString()
       };

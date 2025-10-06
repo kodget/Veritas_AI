@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../redux/store';
  
 import { authRequest, authSuccess, authFailure } from '../features/auth/authSlice';
 import { IoLogIn } from 'react-icons/io5';
+import { apiService } from '../services/api';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -30,17 +31,20 @@ const Login: React.FC = () => {
     dispatch(authRequest());
 
     try {
-      // Simulate API call without unnecessary delay
-      const isValid = email === 'bola@veritas.ai' && password === 'secure123';
+      const response = await apiService.login({ email, password });
       
-      if (isValid) {
-        const user = { id: 'user-007', email, firstName: 'Bola', role: 'Adjuster' as const };
-        const token = 'jwt-secure-token-demo';
+      if (response.access_token) {
+        const user = { 
+          id: response.user?.id || 'user-001', 
+          email, 
+          firstName: response.user?.firstName || 'User', 
+          role: 'Adjuster' as const 
+        };
         
-        dispatch(authSuccess({ user, token }));
+        dispatch(authSuccess({ user, token: response.access_token }));
         navigate('/dashboard');
       } else {
-        dispatch(authFailure('Invalid email or password. Please try again.'));
+        dispatch(authFailure(response.message || 'Invalid email or password. Please try again.'));
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Network error. Please check your connection.';
