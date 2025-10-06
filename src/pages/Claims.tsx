@@ -1,10 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { setIsOpen } from "../components/features/Modal/toggleModalSlice";
+import { useNavigate } from 'react-router-dom';
 
 import MultiStepFormModal from "../components/common/Modal/MultiStepFormModal";
 
 const Claims = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isOpen = useAppSelector((state) => state.modal.isOpen);
   const { results } = useAppSelector((state) => state.search);
   
@@ -65,6 +67,7 @@ const Claims = () => {
             {results.map((data, index) => (
               <tr 
                 key={index} 
+                onClick={() => navigate(`/claims/${data.ClaimID}`)}
                 className="border-b border-slate-700 hover:bg-slate-700 cursor-pointer transition-colors"
               >
                 <td className="p-5 text-white">{data.Claimant}</td>

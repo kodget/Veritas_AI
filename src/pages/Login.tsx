@@ -38,7 +38,7 @@ const Login: React.FC = () => {
         const token = 'jwt-secure-token-demo';
         
         dispatch(authSuccess({ user, token }));
-        navigate('/report');
+        navigate('/dashboard');
       } else {
         dispatch(authFailure('Invalid email or password. Please try again.'));
       }
@@ -53,7 +53,7 @@ const Login: React.FC = () => {
       {/* Back to Landing Button */}
       <div className="mb-4">
         <button
-          onClick={() => navigate('/landing')}
+          onClick={() => navigate('/')}
           className="flex items-center text-slate-600 hover:text-emerald-600 transition-colors duration-200"
         >
           <i className="fa-solid fa-arrow-left mr-2"></i>

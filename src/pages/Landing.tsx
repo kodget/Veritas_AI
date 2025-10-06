@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
   const [activeStep, setActiveStep] = useState(1);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,22 +74,32 @@ const Landing = () => {
             A fully automated, forensic AI platform that turns unstructured claims data into an evidence-backed verdict and actionable intelligence.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-6 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-emerald-500/25">
-              Request an Executive Demo
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button className="group relative bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white px-12 py-6 rounded-xl text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-emerald-500/40 border border-emerald-400/20">
+              <span className="relative z-10 flex items-center gap-2">
+                <i className="fa-solid fa-calendar-check"></i>
+                Request an Executive Demo
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-300 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
             </button>
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <button 
                 onClick={() => navigate('/login')}
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-slate-900 px-8 py-6 rounded-lg text-xl font-semibold transition-all duration-300"
+                className="group relative bg-transparent border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-slate-900 px-8 py-6 rounded-xl text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-400/30"
               >
-                Sign In
+                <span className="flex items-center gap-2">
+                  <i className="fa-solid fa-sign-in-alt"></i>
+                  Sign In
+                </span>
               </button>
               <button 
                 onClick={() => navigate('/signup')}
-                className="bg-white text-slate-900 hover:bg-slate-200 px-8 py-6 rounded-lg text-xl font-semibold transition-all duration-300"
+                className="group relative bg-gradient-to-r from-slate-100 to-white text-slate-900 hover:from-white hover:to-slate-50 px-8 py-6 rounded-xl text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-white/20 border border-white/30"
               >
-                Sign Up
+                <span className="flex items-center gap-2">
+                  <i className="fa-solid fa-user-plus"></i>
+                  Sign Up
+                </span>
               </button>
             </div>
           </div>
@@ -96,8 +107,16 @@ const Landing = () => {
       </section>
 
       {/* Problem Section */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section 
+        className="py-24 px-6 relative"
+        style={{
+          backgroundImage: 'url(/assets/backgrounds/workflow-bg.jpeg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-slate-900 bg-opacity-30"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-20">
           <h2 className="text-4xl font-bold mb-8 text-slate-200">
             The Current Reality: Claims Investigation Takes Too Long
           </h2>
@@ -115,11 +134,10 @@ const Landing = () => {
         style={{
           backgroundImage: 'url(/assets/backgrounds/workflow-bg.jpeg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundBlendMode: 'overlay'
+          backgroundPosition: 'center'
         }}
       >
-        <div className="absolute inset-0 bg-slate-800 bg-opacity-90"></div>
+        <div className="absolute inset-0 bg-slate-800 bg-opacity-20"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <h2 className="text-5xl font-bold text-center mb-8 text-white">
             The Veritas AI Difference
@@ -197,21 +215,12 @@ const Landing = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="w-64 h-48 bg-slate-800 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden">
+                    <div className="w-96 h-72 bg-slate-800 rounded-lg border border-slate-600">
                       <img 
                         src="/assets/step-1-gateway.jpeg" 
                         alt="Claims Gateway Interface"
                         className="w-full h-full object-cover rounded-lg"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                          if (nextElement) nextElement.style.display = 'flex';
-                        }}
                       />
-                      <div className="flex flex-col items-center text-slate-500">
-                        <i className="fa-solid fa-upload text-4xl mb-2"></i>
-                        <span className="text-sm">Upload Interface</span>
-                      </div>
                     </div>
                   </div>
                 )}
@@ -238,21 +247,12 @@ const Landing = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="w-64 h-48 bg-slate-800 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden">
+                    <div className="w-96 h-72 bg-slate-800 rounded-lg border border-slate-600">
                       <img 
                         src="/assets/step-2-pipeline.jpeg" 
                         alt="AI Processing Pipeline"
                         className="w-full h-full object-cover rounded-lg"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                          if (nextElement) nextElement.style.display = 'flex';
-                        }}
                       />
-                      <div className="flex flex-col items-center text-slate-500">
-                        <i className="fa-solid fa-cogs text-4xl mb-2"></i>
-                        <span className="text-sm">AI Pipeline</span>
-                      </div>
                     </div>
                   </div>
                 )}
@@ -273,21 +273,12 @@ const Landing = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="w-64 h-48 bg-slate-800 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden">
+                    <div className="w-96 h-72 bg-slate-800 rounded-lg border border-slate-600">
                       <img 
                         src="/assets/step-3-verdict.jpeg" 
                         alt="AI Verdict Dashboard"
                         className="w-full h-full object-cover rounded-lg"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                          if (nextElement) nextElement.style.display = 'flex';
-                        }}
                       />
-                      <div className="flex flex-col items-center text-slate-500">
-                        <i className="fa-solid fa-gavel text-4xl mb-2"></i>
-                        <span className="text-sm">AI Verdict</span>
-                      </div>
                     </div>
                   </div>
                 )}
@@ -316,21 +307,12 @@ const Landing = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="w-64 h-48 bg-slate-800 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden">
+                    <div className="w-96 h-72 bg-slate-800 rounded-lg border border-slate-600">
                       <img 
                         src="/assets/step-4-copilot.jpeg" 
                         alt="AI Co-pilot Interface"
                         className="w-full h-full object-cover rounded-lg"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                          if (nextElement) nextElement.style.display = 'flex';
-                        }}
                       />
-                      <div className="flex flex-col items-center text-slate-500">
-                        <i className="fa-solid fa-robot text-4xl mb-2"></i>
-                        <span className="text-sm">AI Co-pilot</span>
-                      </div>
                     </div>
                   </div>
                 )}
@@ -409,13 +391,12 @@ const Landing = () => {
       <section 
         className="py-24 px-6 bg-gradient-to-r from-indigo-900 to-slate-900 relative"
         style={{
-          backgroundImage: 'url(/assets/backgrounds/cta-bg.jpeg)',
+          backgroundImage: 'url(/assets/backgrounds/cta-bg.jpg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundBlendMode: 'overlay'
+          backgroundPosition: 'center'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-900 to-slate-900 bg-opacity-80"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-900 to-slate-900 bg-opacity-20"></div>
         {/* Demo Banner */}
         <div className="absolute left-10 top-1/2 transform -translate-y-1/2 opacity-10 hidden lg:block">
           <img 
@@ -433,15 +414,24 @@ const Landing = () => {
             Schedule a private 15-minute demonstration to see how Veritas AI processes your most complex claim in real-time.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-16 py-8 rounded-lg text-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-emerald-500/25">
-              Secure Your Demo Slot Today
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button className="group relative bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 hover:from-emerald-500 hover:via-emerald-400 hover:to-emerald-500 text-white px-16 py-8 rounded-2xl text-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-emerald-500/50 border-2 border-emerald-400/30">
+              <span className="relative z-10 flex items-center gap-3">
+                <i className="fa-solid fa-rocket"></i>
+                Secure Your Demo Slot Today
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-300 rounded-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-2xl opacity-20 group-hover:opacity-40 blur transition-opacity duration-300"></div>
             </button>
             <button 
               onClick={() => navigate('/signup')}
-              className="bg-white text-slate-900 hover:bg-slate-200 px-16 py-8 rounded-lg text-2xl font-semibold transition-all duration-300"
+              className="group relative bg-gradient-to-r from-white via-slate-50 to-white hover:from-slate-50 hover:via-white hover:to-slate-50 text-slate-900 px-16 py-8 rounded-2xl text-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-white/30 border-2 border-white/50"
             >
-              Get Started Free
+              <span className="flex items-center gap-3">
+                <i className="fa-solid fa-arrow-right"></i>
+                Get Started Free
+              </span>
+              <div className="absolute -inset-1 bg-gradient-to-r from-white to-slate-100 rounded-2xl opacity-20 group-hover:opacity-40 blur transition-opacity duration-300"></div>
             </button>
           </div>
         </div>
@@ -451,11 +441,16 @@ const Landing = () => {
       <div className="fixed bottom-0 left-0 right-0 bg-emerald-600 text-white p-4 shadow-2xl z-50 lg:hidden">
         <div className="flex items-center justify-between max-w-sm mx-auto">
           <span className="font-semibold">Ready to see Veritas AI?</span>
-          <button className="bg-white text-emerald-600 px-4 py-2 rounded font-semibold">
-            Demo
+          <button className="group bg-gradient-to-r from-white to-slate-50 hover:from-slate-50 hover:to-white text-emerald-600 px-6 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-white/30 border border-white/50">
+            <span className="flex items-center gap-2">
+              <i className="fa-solid fa-play"></i>
+              Demo
+            </span>
           </button>
         </div>
       </div>
+
+
     </div>
   );
 };

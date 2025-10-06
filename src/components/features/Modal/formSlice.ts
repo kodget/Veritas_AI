@@ -27,7 +27,9 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     nextStep(state) {
-      state.step += 1;
+      if (state.step < 3) {
+        state.step += 1;
+      }
     },
     previousStep(state) {
       if (state.step > 1) {

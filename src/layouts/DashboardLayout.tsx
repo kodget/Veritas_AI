@@ -3,6 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { logout } from '../features/auth/authSlice';
 import { IoLogOut, IoDocumentText, IoBarChart, IoSettings } from 'react-icons/io5';
+import { FaBrain } from 'react-icons/fa';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -16,9 +17,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/', label: 'Claims', icon: IoDocumentText },
+    { path: '/dashboard', label: 'Dashboard', icon: IoBarChart },
+    { path: '/claims', label: 'Claims', icon: IoDocumentText },
+    { path: '/ai-copilot', label: 'AI Co-Pilot', icon: FaBrain },
     { path: '/reports', label: 'Reports', icon: IoBarChart },
-    { path: '/report', label: 'Report', icon: IoDocumentText },
     { path: '/settings', label: 'Settings', icon: IoSettings },
   ];
 
