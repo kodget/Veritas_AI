@@ -1,4 +1,8 @@
+import { useAppSelector } from '../redux/store';
+
 const Settings = () => {
+  const user = useAppSelector((state) => state.auth.user);
+  
   return (
     <div className="p-8 bg-slate-900 min-h-screen">
       {/* Header */}
@@ -22,7 +26,7 @@ const Settings = () => {
               </label>
               <input 
                 type="text" 
-                defaultValue="Chioma Okoro"
+                defaultValue={user?.firstName || ''}
                 className="w-full px-4 py-3 rounded-lg border border-slate-600 bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
@@ -33,7 +37,7 @@ const Settings = () => {
               </label>
               <input 
                 type="email" 
-                defaultValue="c.okoro@exampleinsurance.ng"
+                defaultValue={user?.email || ''}
                 className="w-full px-4 py-3 rounded-lg border border-slate-600 bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>

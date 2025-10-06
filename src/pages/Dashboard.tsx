@@ -1,13 +1,17 @@
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../redux/store';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <div className="p-6 space-y-6">
       {/* Welcome Header */}
       <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-6 rounded-xl border border-slate-600">
-        <h1 className="text-3xl font-bold text-white mb-2">Welcome to Veritas AI Dashboard</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">
+          Welcome back, {user?.firstName || 'User'}!
+        </h1>
         <p className="text-slate-300">Your AI-powered claims investigation platform</p>
       </div>
 

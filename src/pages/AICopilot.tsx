@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { apiService } from '../services/api';
+import { useAppSelector } from '../redux/store';
 
 // TypeScript interfaces
 interface Message {
@@ -14,10 +15,11 @@ interface InvestigatorChatProps {
 }
 
 const AICopilot: React.FC<InvestigatorChatProps> = ({ claimId = 'CLM-2024-0001' }) => {
+  const user = useAppSelector((state) => state.auth.user);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m your AI investigative assistant. I have access to all claim data and can help you dig deeper into fraud patterns, timeline inconsistencies, and evidence analysis. What would you like to investigate?',
+      text: `Hello ${user?.firstName || 'there'}! I'm your AI investigative assistant. I have access to all claim data and can help you dig deeper into fraud patterns, timeline inconsistencies, and evidence analysis. What would you like to investigate?`,
       sender: 'ai',
       timestamp: new Date().toLocaleTimeString()
     }
@@ -112,6 +114,7 @@ const AICopilot: React.FC<InvestigatorChatProps> = ({ claimId = 'CLM-2024-0001' 
             <span className="text-sm text-slate-400">AI Assistant Online</span>
           </div>
           <div className="text-sm text-slate-400">Claim ID: {claimId}</div>
+          <div className="text-sm text-slate-400">Investigator: {user?.firstName || 'User'}</div>
         </div>
       </div>
 
@@ -140,8 +143,8 @@ const AICopilot: React.FC<InvestigatorChatProps> = ({ claimId = 'CLM-2024-0001' 
                   <p className="text-xs opacity-70 mt-2">{message.timestamp}</p>
                 </div>
                 {message.sender === 'user' && (
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    You
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                    {user?.firstName?.charAt(0) || 'U'}
                   </div>
                 )}
               </div>

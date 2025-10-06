@@ -73,16 +73,16 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-slate-700 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img 
-              src="https://i.pravatar.cc/40?u=claims.adjuster" 
+              src={`https://i.pravatar.cc/40?u=${user?.email || 'default'}`} 
               alt="User Avatar" 
               className="w-10 h-10 rounded-full"
             />
             <div>
               <div className="font-semibold text-sm text-white">
-                {user?.firstName || 'Chioma Okoro'}
+                {user?.firstName || 'User'}
               </div>
               <div className="text-xs text-slate-400">
-                Claims Adjuster
+                {user?.role || 'Claims Adjuster'}
               </div>
             </div>
           </div>
