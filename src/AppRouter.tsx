@@ -10,9 +10,7 @@ import Settings from './pages/Settings';
 import Report from './pages/Report';
 
 // Layouts
-import AuthLayout from './layouts/AuthLayout';
 import DashboardLayout from './layouts/DashboardLayout';
-import Layout from './components/layouts/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // FontAwesome Icons Setup
@@ -23,21 +21,19 @@ library.add(faUser, faEnvelope, faPlus, faXmark);
 const AppRouter: React.FC = () => {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          {/* Auth Pages */}
-          <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
-          <Route path="/signup" element={<AuthLayout><Signup /></AuthLayout>} />
-          
-          {/* Dashboard Pages */}
-          <Route path="/" element={<ProtectedRoute><DashboardLayout><Claims /></DashboardLayout></ProtectedRoute>} />
-          <Route path="/reports" element={<ProtectedRoute><DashboardLayout><Reports /></DashboardLayout></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>} />
-          <Route path="/report" element={<ProtectedRoute><DashboardLayout><Report /></DashboardLayout></ProtectedRoute>} />
-          
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        {/* Auth Pages - No Layout */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        
+        {/* Dashboard Pages - With DashboardLayout */}
+        <Route path="/" element={<ProtectedRoute><DashboardLayout><Claims /></DashboardLayout></ProtectedRoute>} />
+        <Route path="/reports" element={<ProtectedRoute><DashboardLayout><Reports /></DashboardLayout></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>} />
+        <Route path="/report" element={<ProtectedRoute><DashboardLayout><Report /></DashboardLayout></ProtectedRoute>} />
+        
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </Router>
   );
 };

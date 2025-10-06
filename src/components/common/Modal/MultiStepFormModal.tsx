@@ -1,15 +1,15 @@
 import Button from "../Button.tsx";
 import Icons from "../icons/Icons.tsx";
-import type { RootState } from "../../../store/store.ts";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { nextStep, previousStep } from "../../features/Modal/formSlice.ts";
+import { setIsOpen } from "../../features/Modal/toggleModalSlice";
 import FormStepOne from "./FormStepTwo.tsx";
 import FormStepThree from "./FormStepOne.tsx";
 import FormStepTwo from "./FormStepThree.tsx";
 
 const MultiStepFormModal = () => {
-  const dispatch = useDispatch();
-  const step = useSelector((state: RootState) => state.form.step);
+  const dispatch = useAppDispatch();
+  const step = useAppSelector((state) => state.form.step);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className=" w-2/3 h-2/3 bg-[#0a192f] text-center shadow-2xl rounded-2xl p-6  backdrop-blur-sm">
@@ -17,7 +17,7 @@ const MultiStepFormModal = () => {
           <h2 className="text-white text-3xl font-semibold">
             Create New Claim
           </h2>
-          <button>
+          <button onClick={() => dispatch(setIsOpen(false))}>
             <Icons className="text-gray-600 text-2xl " name="xmark" />
           </button>
         </div>

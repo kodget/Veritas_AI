@@ -8,12 +8,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 
 import authReducer from '../features/auth/authSlice'; 
-import analyticsReducer from '../features/analytics/analyticsSlice'; 
+import analyticsReducer from '../features/analytics/analyticsSlice';
+import searchReducer from '../components/features/Search/searchSlice';
+import toggleModalReducer from '../components/features/Modal/toggleModalSlice';
+import formReducer from '../components/features/Modal/formSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,       
     analytics: analyticsReducer,
+    search: searchReducer,
+    modal: toggleModalReducer,
+    form: formReducer,
   },
 });
 
