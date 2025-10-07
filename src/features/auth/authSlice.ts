@@ -15,8 +15,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
-  token: null,
+  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null,
+  token: localStorage.getItem('token'),
   isLoading: false,
   error: null,
 };
@@ -34,6 +34,9 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isLoading = false;
       state.error = null;
+      // Persist to localStorage
+      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('user', JSON.stringify(action.payload.user));
     },
     authFailure: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
@@ -45,6 +48,9 @@ export const authSlice = createSlice({
       state.token = null;
       state.error = null;
       state.isLoading = false;
+      // Clear localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     },
   },
 });

@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../layouts/AuthLayout';
 import { useAppDispatch, useAppSelector } from '../redux/store'; 
 import { authRequest, authSuccess, authFailure } from '../features/auth/authSlice';
-import { IoPersonAdd } from 'react-icons/io5'; 
+import { IoPersonAdd } from 'react-icons/io5';
+import { apiService } from '../services/api'; 
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
@@ -19,7 +20,7 @@ const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name || !email || !password) {
@@ -29,32 +30,51 @@ const Signup: React.FC = () => {
 
     dispatch(authRequest());
 
-    // --- SIMULATED REGISTRATION API CALL ---
-    setTimeout(() => {
-      try {
-        if (!email.includes('@')) {
-          dispatch(authFailure('Please enter a valid email address.'));
-          return;
-        }
-        if (password.length < 6) {
-          dispatch(authFailure('Password must be at least 6 characters long.'));
-          return;
-        }
+    try {
+      const response = await apiService.signup({ 
+        email, 
+        password, 
+        full_name: name
+      });
+      
+      if (response.id) {
+        const user = { 
+          id: response.id, 
+          email: response.email, 
+          firstName: response.full_name || name.split(' ')[0], 
+          role: 'Adjuster' as const 
+        };
         
-        // Success: Log user in immediately after successful registration
-        const dummyUser = { id: 'user-new', email: email, firstName: name, role: 'Adjuster' as const };
-        const dummyToken = 'jwt-secure-token-new-user';
-        
-        dispatch(authSuccess({ user: dummyUser, token: dummyToken }));
-        navigate('/report');
-      } catch (error) {
-        dispatch(authFailure('An unexpected error occurred during registration.'));
+        // For signup, we need to login after successful registration
+        const loginResponse = await apiService.login({ email, password });
+        if (loginResponse.access_token) {
+          dispatch(authSuccess({ user, token: loginResponse.access_token }));
+        } else {
+          dispatch(authSuccess({ user, token: 'temp-token' }));
+        }
+        navigate('/dashboard');
+      } else {
+        dispatch(authFailure(response.message || 'Registration failed. Please try again.'));
       }
-    }, 1500); 
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Network error. Please check your connection.';
+      dispatch(authFailure(errorMessage));
+    }
   };
 
   return (
     <AuthLayout>
+      {/* Back to Landing Button */}
+      <div className="mb-4">
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center text-slate-600 hover:text-emerald-600 transition-colors duration-200"
+        >
+          <i className="fa-solid fa-arrow-left mr-2"></i>
+          Back to Landing
+        </button>
+      </div>
+      
       <h2 className="text-2xl font-bold text-gray-800 text-center mb-6 flex items-center justify-center">
         <IoPersonAdd className="h-6 w-6 mr-2 text-emerald-500" />
         New Agent Registration

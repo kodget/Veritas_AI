@@ -10,7 +10,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`px-6 py-3 rounded-lg font-semibold cursor:pointer transition duration-300 gap-2 ${bgColor} ${color} ${hoverColor}`}
+      className={`flex items-center px-6 py-3 rounded-lg font-semibold cursor-pointer transition duration-300 gap-2 ${bgColor} ${color} ${hoverColor}`}
       onClick={onClick}
     >
       <Icons name="plus" /> {title}
